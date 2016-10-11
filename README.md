@@ -14,7 +14,6 @@ Edit this funtions to set correct paths:
  * function getDownloadOutputDirectory() { ... } // Path to download torrents files
 
 Edit db/torrent.db to start monitoring the series and films.
-
 ```sh
 $ sql3 torrent.db
 ```

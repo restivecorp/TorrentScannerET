@@ -17,13 +17,13 @@ Edit db/torrent.db to start monitoring the series and films.
 ```sh
 $ sql3 torrent.db
 ```
+For automatic dowloads yo can configure the script into cron trask.
 
 ## Usage
 Type next command to show help about:
 ```sh
 $ php scanner.php
-```
-```sh
+
 Missin parameter:
 Ussage: php scanner.php OPTION ... [TITLE]
 
@@ -47,3 +47,7 @@ Ussage: php scanner.php OPTION ... [TITLE]
    $ -films   : To scan enabled films stored in database
    $ -series  : To scan enabled series stored in database
 ```
+
+It's important that when you search a serie or film, change spaces by the character plus. For example 'the big bang theory' would be the+big+bang+theory'
+
+

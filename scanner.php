@@ -50,7 +50,7 @@
 		}
 		
     	if ($argv[1] == "-films") {
-			echo "searching films....";
+			scanFilms();
 			return;			
     	}
 		
@@ -169,9 +169,9 @@
 		return $episodes;
 	}
 	
-	// Scan all active series in database to find a new episode
+	// Scan all series in database to find a new episode
 	function scanSeries() {
-		$series = getSeriesFromDataBase("ACTIVE");
+		$series = getSeriesFromDataBase();
 		
 		foreach($series as $s) {
 			$episodes = searchSerie($s['search']);
@@ -181,7 +181,7 @@
 			if ($new != null) {
 				// notify
 				if ($s['notify']){
-					notify($new);
+					notify($new['name'] . " " . $new['episode']);
 				}
 			
 				// download
@@ -278,6 +278,24 @@
 		}
 				
 		return $titlesOptimized;
+	}
+	
+	// Scan all films in database to find more results
+	function scanFilms() {
+		$films = getFilmsFromDataBase();
+				
+		foreach($films as $f) {
+			$results = searchFilm($f['search']);
+			
+			if (count($results) > $f['results']) {
+				// notify
+				if ($f['notify']){
+					notify($f['search'] . " " . count($results));
+				}
+			
+				updateFilm(count($results), $f['id']);
+			}
+		}	
 	}
 
 	/*
@@ -414,15 +432,8 @@
 	*/
 	
 	// get all series from database
-	function getSeriesFromDataBase($allOrActive) {
-		$query = "";
-		if ($allOrActive == "ALL") {
-			$query = "select * from serie";
-		} 
-		
-		if ($allOrActive == "ACTIVE") {
-			$query = "select * from serie where (notify = 1 or download = 1)";
-		}
+	function getSeriesFromDataBase() {
+		$query = "select * from serie";
 		
 		$db = new SQLite3(getDataBaseLocation());
 		$results = $db->query($query);
@@ -446,15 +457,38 @@
 		$db->close();
 	}
 	
+	// get all films from database
+	function getFilmsFromDataBase(/*$allOrActive*/) {
+		$query = "select * from film";
+				
+		$db = new SQLite3(getDataBaseLocation());
+		$results = $db->query($query);
+		
+		$data = array();
+        while($row = $results->fetchArray(SQLITE3_ASSOC)){ 
+          array_push($data, $row);
+        } 
+
+		$db->close();
+		return $data;
+	}
+	
+	// update film
+	function updateFilm($results, $id){
+		$db = new SQLite3(getDataBaseLocation());
+		$db->exec("update film set results = ".$results." where id = ". $id);
+				
+		$db->close();
+	}
 	
 	/*
-		Data Base Utils
-		---------------
+		Common Utils
+		-------------
 	*/
 	
 	// Push notification
-	function notify($new) {
-		exec(getPushScriptLocation() . $new['name'] . " " . $new['episode']);
+	function notify($message) {
+		exec(getPushScriptLocation() . $message);
 	}
 	
 	// Download torrent

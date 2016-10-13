@@ -6,7 +6,7 @@ PHP script that allows the following actions
  - Search TV Serie. You can show all contents about that serie and download all torrent links
  - Search Film. You can show all contens about that film and download all torrent links
  - Monitorice TV Serie and notify and/or download when a new episode is available
- - Monitorice Film and notify when is available (not implemented yet)
+ - Monitorice Film and notify when is available
 
 ## Configure
 Edit this funtions to set correct paths:

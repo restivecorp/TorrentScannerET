@@ -430,11 +430,15 @@
 		Data Base Utils
 		---------------
 	*/
-	
 	// get all series from database
-	function getSeriesFromDataBase() {
-		$query = "select * from serie";
-		
+	function getSeriesFromDataBase($allOrActive = 1) {
+		$query = "";
+		if (!$allOrActive) {
+			$query = "select * from serie";	
+
+		}else{
+			$query = "select * from serie where (notify = 1 or download = 1)";
+		}
 		$db = new SQLite3(getDataBaseLocation());
 		$results = $db->query($query);
 		
@@ -458,9 +462,9 @@
 	}
 	
 	// get all films from database
-	function getFilmsFromDataBase(/*$allOrActive*/) {
-		$query = "select * from film";
-				
+	function getFilmsFromDataBase($allOrActive = 1) {
+		$query = "select * from film where active = " . $allOrActive;
+					
 		$db = new SQLite3(getDataBaseLocation());
 		$results = $db->query($query);
 		

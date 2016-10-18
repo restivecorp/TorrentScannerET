@@ -1,0 +1,24 @@
+# TorrentScannerET
+PHP scraping to search torrents in a Web Portal (ET)
+
+## What is?
+Web interface for php scanner script
+
+## Configure
+Edit this funtions to set correct paths (php/web):
+ * getPathScanner (){ ... } // Full path to php scanner.php script
+ * getDataBaseLocation () { ... } // Full path to database
+
+## Usage
+Copy files into web server:
+```sh
+	+ scanner
+		+ db
+			- torrents.db
+		+ web
+			+ css
+			+ js
+			+ *.php
+```
+
+Open brwoser to URL: http://YOUR_IP/scanner/web/

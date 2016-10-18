@@ -22,3 +22,9 @@ Copy files into web server:
 ```
 
 Open brwoser to URL: http://YOUR_IP/scanner/web/
+
+
+## Screenshots
+![alt tag](https://github.com/ruboweb/TorrentScannerET/blob/master/web/screenshots/1.png)
+![alt tag](https://github.com/ruboweb/TorrentScannerET/blob/master/web/screenshots/2.png)
+![alt tag](https://github.com/ruboweb/TorrentScannerET/blob/master/web/screenshots/3.png)

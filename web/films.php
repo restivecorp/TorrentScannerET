@@ -24,52 +24,53 @@
 								Create new Film to scan
 							</button>
 						</p>
-						
-						<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Search</th>
-									<th>Results</th>
-									<th>Notify</th>
-									<th>Status</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-									$url = getUrlBaseToSearch();
-									$films = getFilmsFromDataBase();
-									
-									foreach ($films as $f){
-										if ($f['active'] == 1) {
-											echo "<tr>";	
-										} else {
-											echo "<tr class=\"danger\">";		
-										}																				
-											echo "<td>". $f['name'] ."</td>";
-											echo "<td><a href=\"" . $url . $f['search'] ."\" target=\"_blank\" >[+]</a> ". $f['search'] ." </td>";
-											echo "<td>". $f['results'] ."</td>";
-											
-											if ($f['notify'] == 1) {
-												echo "<td>Yes</td>";
-											} else {
-												echo "<td>No</td>";
-											}
-											
+						<div class="table-responsive">
+							<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Search</th>
+										<th>Results</th>
+										<th>Notify</th>
+										<th>Status</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										$url = getUrlBaseToSearch();
+										$films = getFilmsFromDataBase();
+										
+										foreach ($films as $f){
 											if ($f['active'] == 1) {
-												echo "<td>Active</td>";
+												echo "<tr>";	
 											} else {
-												echo "<td>Disabled</td>";
-											}
-											
-											echo "<td><a href=\"editfilm.php?id=".$f['id']."\">Edit</a></td>";											
-										echo "</tr>";
-									}
-								?>
+												echo "<tr class=\"danger\">";		
+											}																				
+												echo "<td>". $f['name'] ."</td>";
+												echo "<td><a href=\"" . $url . $f['search'] ."\" target=\"_blank\" >[+]</a> ". $f['search'] ." </td>";
+												echo "<td>". $f['results'] ."</td>";
+												
+												if ($f['notify'] == 1) {
+													echo "<td>Yes</td>";
+												} else {
+													echo "<td>No</td>";
+												}
+												
+												if ($f['active'] == 1) {
+													echo "<td>Active</td>";
+												} else {
+													echo "<td>Disabled</td>";
+												}
+												
+												echo "<td><a href=\"editfilm.php?id=".$f['id']."\">Edit</a></td>";											
+											echo "</tr>";
+										}
+									?>
 
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

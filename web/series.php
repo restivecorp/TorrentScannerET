@@ -24,55 +24,55 @@
 								Create new Serie to scan
 							</button>
 						</p>
-						
-						<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Search</th>
-									<th>Last Episode</th>
-									<th>Notify</th>
-									<th>Download</th>
-									<th>Actions</th>
-								</tr>
-							</thead>
-							<tbody>
-								<?php
-									$url = getUrlBaseToSearch();
-									$series = getSeriesFromDataBase();
-									
-									foreach ($series as $s){
-										if ($s['notify'] == 0 && $s['download'] == 0) {
-											echo "<tr class=\"danger\">";		
-										} else {
-											echo "<tr>";	
-										}	
-
+						<div class="table-responsive">
+							<table id="zctb" class="display table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Search</th>
+										<th>Last Episode</th>
+										<th>Notify</th>
+										<th>Download</th>
+										<th>Actions</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										$url = getUrlBaseToSearch();
+										$series = getSeriesFromDataBase();
 										
-											echo "<td>". $s['name'] ."</td>";
-											echo "<td><a href=\"" . $url . $s['search'] ."\" target=\"_blank\" >[+]</a> ". $s['search'] ." </td>";
-											echo "<td>". $s['lastEpisode'] ."</td>";
-											
-											if ($s['notify'] == 1) {
-												echo "<td>Yes</td>";
+										foreach ($series as $s){
+											if ($s['notify'] == 0 && $s['download'] == 0) {
+												echo "<tr class=\"danger\">";		
 											} else {
-												echo "<td>No</td>";
-											}
+												echo "<tr>";	
+											}	
+
 											
-											if ($s['download'] == 1) {
-												echo "<td>Yes</td>";
-											} else {
-												echo "<td>No</td>";
-											}
+												echo "<td>". $s['name'] ."</td>";
+												echo "<td><a href=\"" . $url . $s['search'] ."\" target=\"_blank\" >[+]</a> ". $s['search'] ." </td>";
+												echo "<td>". $s['lastEpisode'] ."</td>";
+												
+												if ($s['notify'] == 1) {
+													echo "<td>Yes</td>";
+												} else {
+													echo "<td>No</td>";
+												}
+												
+												if ($s['download'] == 1) {
+													echo "<td>Yes</td>";
+												} else {
+													echo "<td>No</td>";
+												}
 
-											echo "<td><a href=\"editserie.php?id=".$s['id']."\">Edit</a></td>";											
-										echo "</tr>";
-									}
-								?>
+												echo "<td><a href=\"editserie.php?id=".$s['id']."\">Edit</a></td>";											
+											echo "</tr>";
+										}
+									?>
 
-							</tbody>
-						</table>
-
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>

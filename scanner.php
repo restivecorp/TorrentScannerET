@@ -110,6 +110,7 @@
 	
 	// Gets all episodes of a series. Can show (-v) and/or downaload (-d) it
 	function searchSerie($title, $verbose = false, $downaload = false) {
+		wlog("");
 		wlog("searchSerie($title, $verbose, $downaload)");
 		
 		// Array data episodes
@@ -144,7 +145,10 @@
 	// Scan all series in database to find a new episode
 	function scanSeries() {
 		$series = getSeriesFromDataBase();
-		wlog("\nscanSeries ". count($series));
+		wlog("");
+		wlog("----------------");
+		wlog(" scanSeries ". count($series));
+		wlog("----------------");
 		
 		foreach($series as $s) {
 			$episodes = searchSerie($s['search']);
@@ -226,6 +230,7 @@
 	*/
 	// Gets all titles of a Film. Can show (-v) and/or downaload (-d) it quality premium (-q)
 	function searchFilm($title, $verbose = false, $downaload = false, $quality = false) {
+		wlog("");
 		wlog("searchFilm($title, $verbose, $downaload, $quality)");
 		
 		// search titles
@@ -261,7 +266,11 @@
 	// Scan all films in database to find more results
 	function scanFilms() {
 		$films = getFilmsFromDataBase();
-		wlog("\nscanFilms ". count($films));
+							
+		wlog("");
+		wlog("---------------");
+		wlog(" scanFilms ". count($films));
+		wlog("---------------");
 				
 		foreach($films as $f) {
 			$results = searchFilm($f['search']);
@@ -486,7 +495,11 @@
 	function wlog($info){
 		$arch = fopen(realpath( '.' )."/logs/scanner_".date("Y-m").".log", "a+"); 
 
-		fwrite($arch, "[".date("Y-m-d H:i:s")."]: $info\n");
+		if ($info == "") {
+			fwrite($arch, "\n");
+		}else {
+			fwrite($arch, "[".date("Y-m-d H:i:s")."]: $info\n");	
+		}
 		
 		fclose($arch);
 	}

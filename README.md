@@ -12,6 +12,7 @@ PHP script that allows the following actions
 Edit this funtions to set correct paths in 'config.php' file:
  * function getPushScriptLocation() { ... } // push.sh stript (https://github.com/ruboweb/ShellScripting/)
  * function getDownloadOutputDirectory() { ... } // Path to download torrents files
+ * function getLogDirectory() { ... } // Path to write log
 
 Edit db/torrent.db to start monitoring the series and films.
 ```sh

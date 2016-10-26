@@ -33,4 +33,10 @@
 	function getDownloadOutputDirectory() {
 		return "/server/.watch/";
 	}
+
+	// Log directory
+	function getLogPath() {
+		return "/server/scanner/logs/";
+	}	
+	
 ?>

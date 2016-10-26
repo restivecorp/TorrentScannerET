@@ -411,7 +411,8 @@
 	*/
 	
 	//Open url and gets the page 
-	function makeSearchRequest($search, $pag = 0) {		
+	function makeSearchRequest($search, $pag = 0) {
+		sleep(5); // sleep 5 seconds to evict exceded limit int the page		
 		$url = getUrlBaseToSearch().$search.getUrlBaseToSearchByPage().$pag;
 
 	    $ch = curl_init();

@@ -493,14 +493,14 @@
 	
 	// Create a mensual log for application
 	function wlog($info){
-		$arch = fopen(getLogPath()."scanner_".date("Y-m").".log", "a+"); 
+		$log = fopen(getLogPath()."scanner_".date("Y-m").".log", "a+"); 
 
 		if ($info == "") {
-			fwrite($arch, "\n");
+			fwrite($log, "\n");
 		}else {
-			fwrite($arch, "[".date("Y-m-d H:i:s")."]: $info\n");	
+			fwrite($log, "[".date("Y-m-d H:i:s")."]: $info\n");	
 		}
 		
-		fclose($arch);
+		fclose($log);
 	}
 ?>

@@ -1,39 +1,6 @@
 <?php
-	/*
-		Configuration paramenters
-		-------------------------
-	*/
+	require_once('config.php');
 	
-	// URL to search content
-	function getUrlBaseToSearch() {
-		return "http://www.elitetorrent.net/resultados/";
-	}
-	
-	// URL to search content by page
-	function getUrlBaseToSearchByPage() {
-		return "/pag:";
-	}
-	
-	// URL to download files
-	function getUrlToDownloadFile() {
-		return "http://www.elitetorrent.net/get-torrent/";
-	}
-	
-	// Database file
-	function getDataBaseLocation() {
-		return "db/torrents.db";
-	}
-	
-	// Push script location
-	function getPushScriptLocation() {
-		return "./push.sh ";
-	}
-	
-	// Download output directory
-	function getDownloadOutputDirectory() {
-		return "/server/.watch/";
-	}
-
 	/*
 		Main method
 		-----------
@@ -143,11 +110,14 @@
 	
 	// Gets all episodes of a series. Can show (-v) and/or downaload (-d) it
 	function searchSerie($title, $verbose = false, $downaload = false) {
+		wlog("searchSerie($title, $verbose, $downaload)");
+		
 		// Array data episodes
 		$episodes = array();
 		
 		// number of pages from result
 		$pages = getNumberOfPagesFromResults($title);
+		wlog("\tPages: $pages");
 		
 		// search episodes
 		for ($i = $pages; $i > 0; $i--) {
@@ -166,12 +136,15 @@
 				exec("curl -s ". $e["torrent"] . " > " . getDownloadOutputDirectory() . $e["name"] . "-" . $e["episode"] . ".torrent");
 			}
 		}
+		
+		wlog("\tEpisodes: " . count($episodes));
 		return $episodes;
 	}
 	
 	// Scan all series in database to find a new episode
 	function scanSeries() {
 		$series = getSeriesFromDataBase();
+		wlog("\nscanSeries ". count($series));
 		
 		foreach($series as $s) {
 			$episodes = searchSerie($s['search']);
@@ -179,6 +152,8 @@
 			// new episode
 			$new = has_next_episode($s['lastEpisode'], $episodes);
 			if ($new != null) {
+				wlog("\tNew episode: $new");		
+				
 				// notify
 				if ($s['notify']){
 					notify($new['name'] . " " . $new['episode']);
@@ -251,6 +226,8 @@
 	*/
 	// Gets all titles of a Film. Can show (-v) and/or downaload (-d) it quality premium (-q)
 	function searchFilm($title, $verbose = false, $downaload = false, $quality = false) {
+		wlog("searchFilm($title, $verbose, $downaload, $quality)");
+		
 		// search titles
 		$titles = parseHTMLDataFromFilm($title);
 		$titlesOptimized = array();
@@ -276,18 +253,22 @@
 				exec("curl -s ". $e["torrent"] . " > " . getDownloadOutputDirectory() . $e["name"] . ".torrent");
 			}
 		}
-				
+		
+		wlog("\tTitles: " . count($titlesOptimized));
 		return $titlesOptimized;
 	}
 	
 	// Scan all films in database to find more results
 	function scanFilms() {
 		$films = getFilmsFromDataBase();
+		wlog("\nscanFilms ". count($films));
 				
 		foreach($films as $f) {
 			$results = searchFilm($f['search']);
-			
+
 			if (count($results) > $f['results']) {
+				wlog("\tNew results");
+				
 				// notify
 				if ($f['notify']){
 					notify($f['search'] . " " . count($results));
@@ -412,7 +393,7 @@
 	
 	//Open url and gets the page 
 	function makeSearchRequest($search, $pag = 0) {
-		sleep(5); // sleep 5 seconds to evict exceded limit int the page		
+		sleep(1); // sleep 1 seconds to evict exceded limit int the page		
 		$url = getUrlBaseToSearch().$search.getUrlBaseToSearchByPage().$pag;
 
 	    $ch = curl_init();
@@ -501,4 +482,12 @@
 		exec("curl -s ". $new['torrent'] . " > " . getDownloadOutputDirectory() . $new['name'] . "-" . $new['episode'] . ".torrent");
 	}
 	
+	// Create a mensual log for application
+	function wlog($info){
+		$arch = fopen(realpath( '.' )."/logs/scanner_".date("Y-m").".log", "a+"); 
+
+		fwrite($arch, "[".date("Y-m-d H:i:s")."]: $info\n");
+		
+		fclose($arch);
+	}
 ?>

@@ -9,7 +9,7 @@ PHP script that allows the following actions
  - Monitorice Film and notify when is available
 
 ## Configure
-Edit this funtions to set correct paths:
+Edit this funtions to set correct paths in 'config.php' file:
  * function getPushScriptLocation() { ... } // push.sh stript (https://github.com/ruboweb/ShellScripting/)
  * function getDownloadOutputDirectory() { ... } // Path to download torrents files
 

@@ -3,6 +3,7 @@ PHP scraping to search torrents in a Web Portal (ET)
 
 ## What is?
 Web interface for php scanner script
+The application template is 'Harmony Admin': http://themestruck.com/theme/harmony-admin/
 
 ## Configure
 Edit this funtions to set correct paths (php/web):

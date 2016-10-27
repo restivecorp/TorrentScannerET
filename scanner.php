@@ -156,7 +156,7 @@
 			// new episode
 			$new = has_next_episode($s['lastEpisode'], $episodes);
 			if ($new != null) {
-				wlog("\tNew episode: $new");		
+				wlog("\tNew episode: " . implode("#", $new));		
 				
 				// notify
 				if ($s['notify']){

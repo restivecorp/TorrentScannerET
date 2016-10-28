@@ -19,7 +19,12 @@
  	});
 	 
 	 
-	 $('#zctb').DataTable();
+	 // $('#zctb').DataTable();
+	 
+	 $('#zctb').dataTable( {
+		"pageLength": 100
+		} );
+
 	 
 	 
 	 $("#input-43").fileinput({

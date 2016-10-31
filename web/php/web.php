@@ -1,5 +1,5 @@
 <?php
-	require_once("/media/hd/server/www/scanner/config.php");
+	require_once("../config.php");
 	
 	if(!isset($_SESSION)) { 
 		session_start();

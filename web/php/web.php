@@ -1,5 +1,5 @@
 <?php
-	require_once("../../config.php");
+	require_once("/media/hd/server/www/scanner/config.php");
 	
 	if(!isset($_SESSION)) { 
 		session_start();
@@ -51,6 +51,10 @@
 
 	if (isset($_GET["type"]) && $_GET["type"] == "updateserie") {
 		updateSerie();
+	}
+
+	if (isset($_GET["type"]) && $_GET["type"] == "deleteserie") {
+		deleteSerie($_GET["id"]);
 	}
 	
 	if (isset($_GET["type"]) && $_GET["type"] == "createfilm") {
@@ -143,6 +147,19 @@
 		die();
 	}
 
+	// delete film
+	function deleteSerie($film) {
+		$query = "delete from serie where id = ".$film;
+				
+		$db = new SQLite3(getDataBaseLocation());
+		$db->exec($query);
+
+		$db->close();
+		
+		header("Location: ../series.php");
+		die();
+	}
+	
 	// create film
 	function createFilm() {
 		$title = "'".$_POST["title"]."'";

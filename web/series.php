@@ -64,8 +64,13 @@
 												} else {
 													echo "<td>No</td>";
 												}
-
-												echo "<td><a href=\"editserie.php?id=".$s['id']."\">Edit</a></td>";											
+												
+												echo "<td>";
+													echo "<a href=\"editserie.php?id=".$s['id']."\">Edit</a>";
+													echo " | ";
+													echo "<a href=\"php/web.php?type=deleteserie&id=".$s['id']."\">Delete</a>";
+												echo "</td>";
+												
 											echo "</tr>";
 										}
 									?>

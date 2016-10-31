@@ -278,11 +278,8 @@
 			if (count($results) > $f['results']) {
 				wlog("\tNew results");
 				
-				// notify
-				if ($f['notify']){
-					notify($f['search'] . " " . count($results));
-				}
-			
+				notify($f['search'] . " " . count($results));
+							
 				updateFilm(count($results), $f['id']);
 			}
 		}	
@@ -453,8 +450,8 @@
 	}
 	
 	// get all films from database
-	function getFilmsFromDataBase($allOrActive = 1) {
-		$query = "select * from film where active = " . $allOrActive;
+	function getFilmsFromDataBase() {
+		$query = "select * from film";
 					
 		$db = new SQLite3(getDataBaseLocation());
 		$results = $db->query($query);

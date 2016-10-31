@@ -170,18 +170,8 @@
 		$title = "'".$_POST["title"]."'";
 		$search = "'".$_POST["search"]."'";
 		$results = $_POST["results"];
-		
-		$notify = 0;
-		if (isset($_POST["notify"])) {
-			$notify = 1;	
-		}
-		
-		$active = 0;
-		if (isset($_POST["active"])) {
-			$active = 1;	
-		}
-		
-		$query = "update film set name = ".$title.", search = ".$search.", results = " .$results.", notify = ".$notify.", active = ".$active." where id = ".$id;
+				
+		$query = "update film set name = ".$title.", search = ".$search.", results = " .$results." where id = ".$id;
 				
 		$db = new SQLite3(getDataBaseLocation());
 		$db->exec($query);

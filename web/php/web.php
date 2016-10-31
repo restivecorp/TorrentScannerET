@@ -1,4 +1,5 @@
 <?php
+	require_once("../../config.php");
 	
 	if(!isset($_SESSION)) { 
 		session_start();
@@ -8,25 +9,6 @@
     if(empty($_SESSION["scann_result"])) {
       $_SESSION["scann_result"] = "";
     } 
-	
-	/*
-		Configuration paramenters
-		-------------------------
-	*/
-	// URL to search content
-	function getUrlBaseToSearch() {
-		return "http://www.elitetorrent.net/resultados/";
-	}
-	
-	// Path php script
-	function getPathScanner() {
-		return "php scanner/scanner.php";
-	}
-	
-	// Database file
-	function getDataBaseLocation() {
-		return "../db/torrents.db";
-	}
 	
 	/*
 		Parse paramenters
@@ -77,6 +59,10 @@
 
 	if (isset($_GET["type"]) && $_GET["type"] == "updatefilm") {
 		updateFilm();
+	}
+
+	if (isset($_GET["type"]) && $_GET["type"] == "deletefilm") {
+		deleteFilm($_GET["id"]);
 	}
 	
 	// Update db contents
@@ -205,6 +191,21 @@
 		header("Location: ../films.php");
 		die();
 	}
+	
+	// delete film
+	function deleteFilm($film) {
+		$query = "delete from film where id = ".$film;
+				
+		$db = new SQLite3(getDataBaseLocation());
+		$db->exec($query);
+
+		$db->close();
+		
+		header("Location: ../films.php");
+		die();
+	}
+	
+
 	
 	// get serie
 	function getSerie($id) {

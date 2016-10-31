@@ -31,8 +31,6 @@
 										<th>Name</th>
 										<th>Search</th>
 										<th>Results</th>
-										<th>Notify</th>
-										<th>Status</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -42,28 +40,17 @@
 										$films = getFilmsFromDataBase();
 										
 										foreach ($films as $f){
-											if ($f['active'] == 1) {
-												echo "<tr>";	
-											} else {
-												echo "<tr class=\"danger\">";		
-											}																				
+											echo "<tr>";	
+																			
 												echo "<td>". $f['name'] ."</td>";
 												echo "<td><a href=\"" . $url . $f['search'] ."\" target=\"_blank\" >[+]</a> ". $f['search'] ." </td>";
 												echo "<td>". $f['results'] ."</td>";
 												
-												if ($f['notify'] == 1) {
-													echo "<td>Yes</td>";
-												} else {
-													echo "<td>No</td>";
-												}
-												
-												if ($f['active'] == 1) {
-													echo "<td>Active</td>";
-												} else {
-													echo "<td>Disabled</td>";
-												}
-												
-												echo "<td><a href=\"editfilm.php?id=".$f['id']."\">Edit</a></td>";											
+												echo "<td>";
+													echo "<a href=\"editfilm.php?id=".$f['id']."\">Edit</a>";
+													echo " | ";
+													echo "<a href=\"php/web.php?type=deletefilm&id=".$f['id']."\">Delete</a>";
+												echo "</td>";
 											echo "</tr>";
 										}
 									?>

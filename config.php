@@ -39,4 +39,8 @@
 		return "/server/scanner/logs/";
 	}	
 	
+	// Path php script
+	function getPathScanner() {
+		return "php scanner/scanner.php";
+	}
 ?>

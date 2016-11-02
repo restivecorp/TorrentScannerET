@@ -119,25 +119,30 @@
 		// number of pages from result
 		$pages = getNumberOfPagesFromResults($title);
 		wlog("\tPages: $pages");
-		
-		// search episodes
-		for ($i = $pages; $i > 0; $i--) {
-			$episodes = array_merge($episodes, parseHTMLDataFromSerie($title, $i));
-		}
-		
-		if ($verbose){
-			orderEpisodes($episodes, "episode");
-			foreach($episodes as $e){
-				print("   > " . $e["name"] . " : " . $e["episode"] . " : " . $e["torrent"]."\n");
+
+		// 100 or more pages ---> fail search
+		if ($pages < 100) {
+			// search episodes
+			for ($i = $pages; $i > 0; $i--) {
+				$episodes = array_merge($episodes, parseHTMLDataFromSerie($title, $i));
 			}
-		}
-		
-		if ($downaload) {
-			foreach($episodes as $e){
-				exec("curl -s ". $e["torrent"] . " > " . getDownloadOutputDirectory() . $e["name"] . "-" . $e["episode"] . ".torrent");
+			
+			if ($verbose){
+				orderEpisodes($episodes, "episode");
+				foreach($episodes as $e){
+					print("   > " . $e["name"] . " : " . $e["episode"] . " : " . $e["torrent"]."\n");
+				}
 			}
-		}
 		
+			if ($downaload) {
+				foreach($episodes as $e){
+					exec("curl -s ". $e["torrent"] . " > " . getDownloadOutputDirectory() . $e["name"] . "-" . $e["episode"] . ".torrent");
+				}
+			}
+		} else{
+			wlog("\tFail Search. Thera are multiple pages.");	
+		}
+				
 		wlog("\tEpisodes: " . count($episodes));
 		return $episodes;
 	}

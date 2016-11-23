@@ -118,10 +118,10 @@
 		
 		// number of pages from result
 		$pages = getNumberOfPagesFromResults($title);
-		wlog("\tPages: $pages");
-
-		// 100 or more pages ---> fail search
-		if ($pages < 100) {
+				
+		if ($pages > 0) {
+			wlog("\tPages: $pages");
+			
 			// search episodes
 			for ($i = $pages; $i > 0; $i--) {
 				$episodes = array_merge($episodes, parseHTMLDataFromSerie($title, $i));
@@ -139,10 +139,10 @@
 					exec("curl -s ". $e["torrent"] . " > " . getDownloadOutputDirectory() . $e["name"] . "-" . $e["episode"] . ".torrent");
 				}
 			}
-		} else{
-			wlog("\tFail Search. Thera are multiple pages.");	
+		} else {
+			wlog("\tFail Search. Empty page for '$title'.");
 		}
-				
+						
 		wlog("\tEpisodes: " . count($episodes));
 		return $episodes;
 	}
@@ -164,14 +164,12 @@
 				wlog("\tNew episode: " . implode("#", $new));		
 				
 				// notify
-				if ($s['notify']){
-					notify($new['name'] . " " . $new['episode']);
-				}
-			
+				notify($new['name'] . " " . $new['episode']);
+				
 				// download
-				if ($s['download']){
-					download($new);
-				}
+				download($new);
+				
+				// update
 				updateEpisode($new['episode'], $s['id']);
 			}
 		}		
@@ -313,12 +311,14 @@
 			$pages = ceil ($totalResults / $elementsPerPage);
 			return $pages;
 		} catch (Exception $e) {
-			return 1;
+			return 0;
 		}
 	}
 		
 	//Parse HTML to extract and return Serie data 
 	function parseHTMLDataFromSerie($search, $page) {
+		$title = str_replace("+", "-", $search);
+				
 		$episodes = array();
 		
 		// get html
@@ -346,13 +346,15 @@
 			
 			preg_match_all($re, $torrentName, $torrentEpisode);
 			if (sizeof($torrentEpisode[0]) > 0) {
-				$episode = array(
-					'name' => $search,
-					'episode' => $torrentEpisode[0][0],
-					'torrent' => getUrlToDownloadFile().$torrentFile
-				);
-				
-				array_push($episodes, $episode);
+				if (strpos($torrentName, $title) !== false) {
+					$episode = array(
+						'name' => $title,
+						'episode' => $torrentEpisode[0][0],
+						'torrent' => getUrlToDownloadFile().$torrentFile
+					);
+					
+					array_push($episodes, $episode);
+				}
 			}
 		}
 		
@@ -424,14 +426,8 @@
 		---------------
 	*/
 	// get all series from database
-	function getSeriesFromDataBase($allOrActive = 1) {
-		$query = "";
-		if (!$allOrActive) {
-			$query = "select * from serie";	
-
-		}else{
-			$query = "select * from serie where (notify = 1 or download = 1)";
-		}
+	function getSeriesFromDataBase() {
+		$query = "select * from serie where (active = 1)";
 		$db = new SQLite3(getDataBaseLocation());
 		$results = $db->query($query);
 		
@@ -495,7 +491,9 @@
 	
 	// Create a mensual log for application
 	function wlog($info){
-		$log = fopen(getLogPath()."scanner_".date("Y-m-d").".log", "a+"); 
+		$file = getLogPath()."scanner_".date("Y-m-d").".log";
+		
+		$log = fopen($file, "a+"); 
 
 		if ($info == "") {
 			fwrite($log, "\n");
@@ -504,5 +502,6 @@
 		}
 		
 		fclose($log);
+		chmod($file, 0777);
 	}
 ?>

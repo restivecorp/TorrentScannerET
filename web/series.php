@@ -31,8 +31,8 @@
 										<th>Name</th>
 										<th>Search</th>
 										<th>Last Episode</th>
-										<th>Notify</th>
-										<th>Download</th>
+										<th>Last View</th>
+										<th>Active</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -42,24 +42,34 @@
 										$series = getSeriesFromDataBase();
 										
 										foreach ($series as $s){
-											if ($s['notify'] == 0 && $s['download'] == 0) {
-												echo "<tr class=\"danger\">";		
-											} else {
-												echo "<tr>";	
-											}	
 
+											$flag = 0;
+											
+											if ($flag == 0 && $s['active'] == 0) {
+												echo "<tr class=\"danger\">";
+												$flag = 1;												
+											} 
+											
+											if ($flag == 0 &&  $s['lastEpisode'] == "1x00") {
+												echo "<tr class=\"info\">";
+												$flag = 1;												
+											}
+																						
+											if ($flag == 0 &&  $s['lastEpisode'] != $s['lastView']) {
+												echo "<tr class=\"success\">";
+												$flag = 1;												
+											} 
+																						
+											if ($flag == 0) {
+												echo "<tr>";	
+											}
 											
 												echo "<td>". $s['name'] ."</td>";
 												echo "<td><a href=\"" . $url . $s['search'] ."\" target=\"_blank\" >[+]</a> ". $s['search'] ." </td>";
 												echo "<td>". $s['lastEpisode'] ."</td>";
-												
-												if ($s['notify'] == 1) {
-													echo "<td>Yes</td>";
-												} else {
-													echo "<td>No</td>";
-												}
-												
-												if ($s['download'] == 1) {
+												echo "<td>". $s['lastView'] ."</td>";
+																								
+												if ($s['active'] == 1) {
 													echo "<td>Yes</td>";
 												} else {
 													echo "<td>No</td>";
@@ -121,26 +131,24 @@
 								</span> 
 							</div>
 						</div>
-						
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Notify</label>
-							<div class="col-sm-10">
-								<div class="checkbox checkbox-success">
-									<input id="notify" type="checkbox" name="notify">
-									<label for="notify">
-										Notify when find new episode?
-									</label>
-								</div>
-							</div>
-						</div>
 
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Download</label>
+							<label class="col-sm-2 control-label">Last View</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" name="lastview">
+								<span class="help-block m-b-none">
+									Must be formatted as pattern [n]x[n][n] :: 1x01 or 2x30 or 1x19
+								</span> 
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Active</label>
 							<div class="col-sm-10">
 								<div class="checkbox checkbox-success">
-									<input id="download" type="checkbox" name="download">
-									<label for="download">
-										Download when find new episode?
+									<input id="active" type="checkbox" name="active">
+									<label for="active">
+										Active to scan?
 									</label>
 								</div>
 							</div>

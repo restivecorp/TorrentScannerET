@@ -1,5 +1,5 @@
 <?php
-	require_once("../config.php");
+	require_once("../../config.php");
 	
 	if(!isset($_SESSION)) { 
 		session_start();
@@ -96,19 +96,15 @@
 	function createSerie() {
 		$title = "'".$_POST["title"]."'";
 		$search = "'".$_POST["search"]."'";
-		$lastaEpisode = "'".$_POST["lastepisode"]."'";
+		$lastEpisode = "'".$_POST["lastepisode"]."'";
+		$lastView = "'".$_POST["lastview"]."'";
 		
-		$notify = 0;
-		if (isset($_POST["notify"])) {
-			$notify = 1;	
+		$active = 0;
+		if (isset($_POST["active"])) {
+			$active = 1;	
 		}
 		
-		$download = 0;
-		if (isset($_POST["download"])) {
-			$download = 1;	
-		}
-		
-		$query = "insert into serie (name, search, lastEpisode, notify, download) values(".$title.", ".$search.", ".$lastaEpisode.", ".$notify.", ".$download.");";
+		$query = "insert into serie (name, search, lastEpisode, lastView, active) values(".$title.", ".$search.", ".$lastEpisode.", ".$lastView.", ".$active.");";
 		
 		$db = new SQLite3(getDataBaseLocation());
 		$db->exec($query);
@@ -124,19 +120,15 @@
 		$id = $_POST["id"];
 		$title = "'".$_POST["title"]."'";
 		$search = "'".$_POST["search"]."'";
-		$lastaEpisode = "'".$_POST["lastepisode"]."'";
+		$lastEpisode = "'".$_POST["lastepisode"]."'";
+		$lastView = "'".$_POST["lastview"]."'";
 		
-		$notify = 0;
-		if (isset($_POST["notify"])) {
-			$notify = 1;	
+		$active = 0;
+		if (isset($_POST["active"])) {
+			$active = 1;	
 		}
-		
-		$download = 0;
-		if (isset($_POST["download"])) {
-			$download = 1;	
-		}
-		
-		$query = "update serie set name = ".$title.", search = ".$search.", lastEpisode = " .$lastaEpisode.", notify = ".$notify.", download = ".$download." where id = ".$id;
+				
+		$query = "update serie set name = ".$title.", search = ".$search.", lastEpisode = " .$lastEpisode.", lastView = ".$lastView.", active = ".$active." where id = ".$id;
 				
 		$db = new SQLite3(getDataBaseLocation());
 		$db->exec($query);

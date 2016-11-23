@@ -63,25 +63,22 @@
 							</div>
 							
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Notify</label>
+								<label class="col-sm-2 control-label">Last View</label>
 								<div class="col-sm-10">
-									<div class="checkbox checkbox-success">
-										<input id="notify" type="checkbox" <?php if($s['notify']) echo "checked"; ?> name="notify">
-										<label for="dwnfilms">
-											Notify when find new episode?
-										</label>
-									</div>
+									<input type="text" class="form-control" name="lastview" value="<?php echo $s['lastView'] ?>">
+									<span class="help-block m-b-none">
+										Must be formatted as pattern [n]x[n][n] :: 1x01 or 2x30 or 1x19
+									</span> 
 								</div>
 							</div>
-
+							
 							<div class="form-group">
-								<label class="col-sm-2 control-label">Download</label>
+								<label class="col-sm-2 control-label">Active</label>
 								<div class="col-sm-10">
 									<div class="checkbox checkbox-success">
-										
-										<input id="download" type="checkbox" <?php if($s['download']) echo "checked"; ?> name="download">
-										<label for="dwnfilms">
-											Download when find new episode?
+										<input id="active" type="checkbox" <?php if($s['active']) echo "checked"; ?> name="active">
+										<label for="active">
+											Active to scan?
 										</label>
 									</div>
 								</div>

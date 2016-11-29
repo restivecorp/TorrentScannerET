@@ -91,19 +91,7 @@
 								</span> 
 							</div>
 						</div>
-												
-						<div class="form-group">
-							<label class="col-sm-2 control-label">Notify</label>
-							<div class="col-sm-10">
-								<div class="checkbox checkbox-success">
-									<input id="notify" type="checkbox" name="notify">
-									<label for="dwnfilms">
-										Notify when find new results?
-									</label>
-								</div>
-							</div>
-						</div>
-					
+
 						<div class="hr-dashed"></div>
 						
 						<div class="form-group">

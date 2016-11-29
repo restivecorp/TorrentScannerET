@@ -157,12 +157,8 @@
 		$title = "'".$_POST["title"]."'";
 		$search = "'".$_POST["search"]."'";
 		
-		$notify = 0;
-		if (isset($_POST["notify"])) {
-			$notify = 1;	
-		}
-		
-		$query = "insert into film (name, search, notify, active) values(".$title.", ".$search.", ".$notify.", 1);";
+
+		$query = "insert into film (name, search) values(".$title.", ".$search.");";
 		
 		$db = new SQLite3(getDataBaseLocation());
 		$db->exec($query);

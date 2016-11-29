@@ -49,7 +49,7 @@
 												echo "<td>";
 													echo "<a href=\"editfilm.php?id=".$f['id']."\">Edit</a>";
 													echo " | ";
-													echo "<a href=\"php/web.php?type=deletefilm&id=".$f['id']."\">Delete</a>";
+													echo "<a href=\"php/web.php?type=deletefilm&id=".$f['id']."\" onclick=\"return confirm('Are you sure you want to delete this item?');\">Delete</a>";
 												echo "</td>";
 											echo "</tr>";
 										}

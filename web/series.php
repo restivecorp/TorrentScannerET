@@ -78,7 +78,7 @@
 												echo "<td>";
 													echo "<a href=\"editserie.php?id=".$s['id']."\">Edit</a>";
 													echo " | ";
-													echo "<a href=\"php/web.php?type=deleteserie&id=".$s['id']."\">Delete</a>";
+													echo "<a href=\"php/web.php?type=deleteserie&id=".$s['id']."\" onclick=\"return confirm('Are you sure you want to delete this item?');\">Delete</a>";
 												echo "</td>";
 												
 											echo "</tr>";

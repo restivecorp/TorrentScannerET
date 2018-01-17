@@ -1,6 +1,11 @@
 # TorrentScannerET
 PHP scraping to search torrents in a Web Portal (ET)
 
+
+_**Discontinued project**_ in favor of:
+ * https://github.com/ruboweb/torrent-scanner-crawler
+ * https://github.com/ruboweb/torrent-scanner-ui
+
 ## What is?
 PHP script that allows the following actions
  - Search TV Serie. You can show all contents about that serie and download all torrent links
